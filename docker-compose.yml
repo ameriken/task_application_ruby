@@ -4,7 +4,7 @@ services:
     image: db_amemiya:20190407
     environment:
       MYSQL_ROOT_PASSWORD: pass
-      MYSQL_DATABASE: ruby_practical_guide
+      MYSQL_DATABASE: task_management
       MYSQL_USER: hoge
       MYSQL_PASSWORD: pass
     ports:

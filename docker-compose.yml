@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+  db:
+    image: db_amemiya:20190407
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: ruby_practical_guide
+      MYSQL_USER: hoge
+      MYSQL_PASSWORD: pass
+    ports:
+    - "3306:3306"
+    volumes:
+    - db-data:/var/lib/mysql
+  web:
+    image: rubyonrails_amemiya:20190407
+    command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 5000 -b '0.0.0.0'"
+    ports:
+    - "5000:5000"
+    volumes:
+    - .:/myapp
+    environment:
+      RAILS_ENV: development
+    env_file: .env.dev
+    depends_on:
+    - db
+volumes:
+  db-data:
+    external: true

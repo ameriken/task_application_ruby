@@ -1,0 +1,4 @@
+source 'http://rubygems.org'
+gem 'rails', '~> 5.2.0'
+# 以下を追記
+gem mysql2

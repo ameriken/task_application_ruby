@@ -31,3 +31,4 @@ build
 /config/master.key
 .docker/
 .idea
+.vscode

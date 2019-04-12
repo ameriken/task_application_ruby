@@ -8,15 +8,12 @@ class TasksController < ApplicationController
   end
 
   def new
-
   end
 
   def create
-    task = Task.new (task_params)
+    task = Task.new(task_params)
     task.save!
-    flash[:notice] = "タスク「#{task.name}」を登録しました。"
-    redirect_to tasks_url
-
+    redirect_to tasks_url, notice: "タスク「#{task.name}」を登録しました。"
   end
 
   def edit
@@ -31,6 +28,6 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:name,:desciription)
+    params.require(:task).permit(:name,:description)
   end
 end

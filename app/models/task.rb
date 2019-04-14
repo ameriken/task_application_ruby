@@ -2,8 +2,9 @@ class Task < ApplicationRecord
   validates :name, presence: true, length: {maximum: 30}
   validate :validate_name_no_including_comma
 
-  private
+  belongs_to :user
 
+  private
   def validate_name_not_including_comma
     errors.add(:name, 'にカンマを含めることはできません。') if name&.include?(',')
   end

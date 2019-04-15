@@ -12,8 +12,8 @@ services:
     volumes:
     - db-data:/var/lib/mysql
   web:
-    #build: .docker/rails/
-    image: rubyonrails_amemiya:20190415
+    build: .docker/rails/
+    #image: rubyonrails_amemiya:20190415
     command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- bin/rails s"
     ports:
     - "3000:3000"

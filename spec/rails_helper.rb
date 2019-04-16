@@ -30,7 +30,7 @@ begin
   ActiveRecord::Migration.maintain_test_schema!
   if ENV["LAUNCH_BROWSER"]
     Capybara.configure do |config|
-      config.server_host = "172.21.0.4" # hostname -i で調べた値
+      config.server_host = "app" # hostname -i で調べた値
       config.server_port = 3000
       config.javascript_driver = :selenium_chrome
     end

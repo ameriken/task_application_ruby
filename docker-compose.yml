@@ -36,6 +36,8 @@ services:
     ports:
       - 4444:4444
       - 5900:5900
+    depends_on:
+    - app
 volumes:
   db-data:
     external: true

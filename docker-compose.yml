@@ -1,6 +1,7 @@
 version: '3.3'
-services:
+services: 
   db:
+    container_name: db
     image: db_amemiya:20190407
     environment:
       MYSQL_ROOT_PASSWORD: pass
@@ -11,10 +12,12 @@ services:
     - "3306:3306"
     volumes:
     - db-data:/var/lib/mysql
-  web:
+  app:
+    container_name: app
     build: .docker/rails/
     #image: rubyonrails_amemiya:20190415
-    command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- bin/rails s"
+    command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    #command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- bin/rails s"
     ports:
     - "3000:3000"
     - "1234:1234"
@@ -27,6 +30,12 @@ services:
     - db
     stdin_open: true
     tty: true
+  chrome:
+    container_name: chrome
+    image: selenium/standalone-chrome-debug:3.141 
+    ports:
+      - 4444:4444
+      - 5900:5900
 volumes:
   db-data:
     external: true

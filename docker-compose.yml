@@ -27,8 +27,15 @@ services:
     env_file: .env.dev
     depends_on:
     - db
+    - chrome
     stdin_open: true
     tty: true
+  chrome:
+    #image: selenium/standalone-chrome:3.141.59-dubnium
+    image: selenium/standalone-chrome-debug:3.141.0-actinium
+    ports:
+      - 4444:4444
+      - 5900:5900
 volumes:
   db-data:
     external: true

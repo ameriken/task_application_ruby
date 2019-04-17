@@ -8,7 +8,7 @@ describe 'タスク管理機能', type: :system do
     end
     context 'ユーザーAがログインしているとき' do
       before do
-        visit login_path
+        visit 'http://app:3000/login'
         fill_in 'メールアドレス', with: 'a@example.com'
         fill_in 'パスワード', with: 'password'
         click_button 'ログインする'

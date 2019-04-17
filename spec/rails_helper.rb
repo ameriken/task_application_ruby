@@ -27,9 +27,13 @@ require 'rspec/rails'
 require "capybara/rails"
 require "selenium/webdriver"
 if ENV["LAUNCH_BROWSER"]
-  Capybara.app_host = "http://app:3000"
-  Capybara.server_host = "app"
-  Capybara.server_port = "2999"
+  Capybara.configure do |config|
+    # docker-compose で設定した alias を使い
+    # chrome コンテナ側から app コンテナ内のサーバーを参照
+    config.server_host = "app"
+    # ポートはデフォルトではランダムに割り当てられるが、設定を簡単にするため固定
+    config.javascript_driver = :selenium_chrome_headless
+  end
 
   Capybara.register_driver :selenium_chrome_headless do |app|
     Capybara::Selenium::Driver.new(

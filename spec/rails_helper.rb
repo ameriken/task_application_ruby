@@ -26,42 +26,30 @@ require 'rspec/rails'
 # If you are not using ActiveRecord, you can remove these lines.
 require "capybara/rails"
 require "selenium/webdriver"
-if ENV["LAUNCH_BROWSER"]
-  Capybara.configure do |config|
-    # docker-compose で設定した alias を使い
-    # chrome コンテナ側から app コンテナ内のサーバーを参照
-    config.server_host = "app"
-    # ポートはデフォルトではランダムに割り当てられるが、設定を簡単にするため固定
-    config.javascript_driver = :selenium_chrome_headless
-  end
 
-  Capybara.register_driver :selenium_chrome_headless do |app|
-    Capybara::Selenium::Driver.new(
-        app,
-        browser: :remote,
-        desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
-            chromeOptions: {
-                args: [
-                    "window-size=1024,512",
-                ]
+Capybara.configure do |config|
+  # docker-compose で設定した alias を使い
+  # chrome コンテナ側から app コンテナ内のサーバーを参照
+  config.server_host = "app"
+  # ポートはデフォルトではランダムに割り当てられるが、設定を簡単にするため固定
+  #config.server_port = 3000
+  config.javascript_driver = :selenium_chrome_headless
+end
 
-            }
-        ),
-        url: "http://chrome:4444/wd/hub",
-        )
-  end
-else
-  Capybara.register_driver :selenium_chrome_headless do |app|
-    Capybara::Selenium::Driver.new(
-        app,
-        browser: :chrome,
-        options: Selenium::WebDriver::Chrome::Options.new(
-            args: [
-                "headless",
-            ],
-            ),
-        )
-  end
+Capybara.register_driver :selenium_chrome_headless do |app|
+  Capybara::Selenium::Driver.new(
+      app,
+      browser: :remote,
+      desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
+          chromeOptions: {
+              args: [
+                  "window-size=1024,512",
+              ]
+
+          }
+      ),
+      url: "http://chrome:4444/wd/hub",
+      )
 end
 
 begin

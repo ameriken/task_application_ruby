@@ -55,6 +55,6 @@ class TasksController < ApplicationController
     @task = current_user.tasks.find(params[:id])
   end
   def task_params
-    params.require(:task).permit(:name,:description)
+    params.require(:task).permit(:name,:description,:image)
   end
 end

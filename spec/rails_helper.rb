@@ -24,12 +24,49 @@ require 'rspec/rails'
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
+require "capybara/rails"
+require "selenium/webdriver"
+if ENV["LAUNCH_BROWSER"]
+  Capybara.app_host = "http://app:3000"
+  Capybara.server_host = "app"
+  Capybara.server_port = "2999"
+
+  Capybara.register_driver :selenium_chrome_headless do |app|
+    Capybara::Selenium::Driver.new(
+        app,
+        browser: :remote,
+        desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
+            chromeOptions: {
+                args: [
+                    "window-size=1024,512",
+                ]
+
+            }
+        ),
+        url: "http://chrome:4444/wd/hub",
+        )
+  end
+else
+  Capybara.register_driver :selenium_chrome_headless do |app|
+    Capybara::Selenium::Driver.new(
+        app,
+        browser: :chrome,
+        options: Selenium::WebDriver::Chrome::Options.new(
+            args: [
+                "headless",
+            ],
+            ),
+        )
+  end
+end
+
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

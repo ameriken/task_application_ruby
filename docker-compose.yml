@@ -25,7 +25,7 @@ services:
     environment:
       RAILS_ENV: development
     env_file: .env.dev
-    depends_on:
+    links:
     - db
     - smtp
     stdin_open: true
@@ -36,6 +36,14 @@ services:
     ports:
       - "1080:1080"
       - "1025:1025"
+  chrome:
+    container_name: chrome
+    image: selenium/standalone-chrome-debug:3.14.0-europium
+    links:
+    - app
+    ports:
+    - 4444:4444
+    - 5900:5900
 volumes:
   db-data:
     external: true

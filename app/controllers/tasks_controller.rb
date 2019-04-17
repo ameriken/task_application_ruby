@@ -3,6 +3,11 @@ class TasksController < ApplicationController
   def index
     @q = current_user.tasks.ransack(params[:q])
     @tasks = @q.result(distinct: true)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @tasks.generate_csv, filename: "tasks-#{Time.zone.now.strftime('%Y%m%d%S')}.csv" }
+    end
   end
 
   def show
@@ -55,6 +60,6 @@ class TasksController < ApplicationController
     @task = current_user.tasks.find(params[:id])
   end
   def task_params
-    params.require(:task).permit(:name,:description)
+    params.require(:task).permit(:name,:description,:image)
   end
 end

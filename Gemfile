@@ -70,3 +70,4 @@ gem 'ransack'
 gem 'mailcatcher'
 gem 'kaminari'
 gem 'sidekiq'
+

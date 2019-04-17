@@ -27,8 +27,15 @@ services:
     env_file: .env.dev
     depends_on:
     - db
+    - smtp
     stdin_open: true
     tty: true
+  smtp:
+    container_name: smtp
+    image: schickling/mailcatcher
+    ports:
+      - "1080:1080"
+      - "1025:1025"
 volumes:
   db-data:
     external: true

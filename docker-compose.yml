@@ -14,14 +14,17 @@ services:
     - db-data:/var/lib/mysql
   app:
     container_name: app
-    build: .docker/rails/
-    #image: rubyonrails_amemiya:20190415
+    #build:
+    #  context: .
+    #  dockerfile: .docker/rails/Dockerfile
+    image: task_application_ruby_app:20190418
     command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- bin/rails s"
     ports:
     - "3000:3000"
     - "1234:1234"
     volumes:
     - .:/myapp
+    - bundle-data1:/usr/local/bundle
     environment:
       RAILS_ENV: development
     env_file: .env.dev
@@ -32,13 +35,15 @@ services:
     tty: true
   smtp:
     container_name: smtp
-    image: schickling/mailcatcher
+    image: task_application_ruby_smtp:20190418
+    #build: .docker/mailcatcher/
     ports:
       - "1080:1080"
       - "1025:1025"
   chrome:
     container_name: chrome
-    image: selenium/standalone-chrome-debug:3.14.0-europium
+    image: task_application_ruby_chrome:20190418
+    #build: .docker/selenium/
     links:
     - app
     ports:
@@ -46,4 +51,7 @@ services:
     - 5900:5900
 volumes:
   db-data:
+    external: true
+  ## ここに関しては、アプリ毎に分けたほうが良い
+  bundle-data1:
     external: true

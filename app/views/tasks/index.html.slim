@@ -12,7 +12,14 @@ h1 タスク一覧
   .form-group
     = f.submit class: 'btn btn-outline-primary float-right'
 
-= link_to '新規登録', new_task_path, class: 'btn btn-primary'
+.div
+  = link_to '新規登録', new_task_path, class: 'btn btn-primary'
+
+.d-flex.flex-row.mt-3
+  = link_to 'エクスポート', tasks_path(format: :csv), class: 'btn btn-primary'
+  = form_tag import_tasks_path, multipart: true, class: 'text-right ml-auto' do
+    = file_field_tag :file
+    = submit_tag "インポート", class: 'btn btn-primary'
 
 .mb-3
 table.table.table-hover
@@ -29,7 +36,3 @@ table.table.table-hover
           td
             = link_to '編集', edit_task_path(task), class: 'btn btn-primary mr-3'
             = link_to '削除', task, method: :delete, data: { confirm: "タスク「#{task.name}」を削除します。よろしいですか？"}, class: 'btn btn-danger'
-= link_to 'エクスポート', tasks_path(format: :csv), class: 'btn btn-primary mb-3'
-= form_tag import_tasks_path, multipart: true, class: 'mb-3' do
-    = file_field_tag :file
-    = submit_tag "インポート", class: 'btn btn-primary'

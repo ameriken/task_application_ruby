@@ -20,5 +20,7 @@ apply plugin: "com.avast.gradle.docker-compose"
 
 dockerCompose {
     waitForTcpPorts = false // turns off the waiting for exposed TCP ports opening
+    removeContainers = false
+    removeVolumes = false
 }
 

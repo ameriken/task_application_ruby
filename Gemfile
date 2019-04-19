@@ -10,7 +10,8 @@ gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+#gem 'sass-rails', '~> 5.0'
+gem 'sassc-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes # gem 'mini_racer', platforms: :ruby # Use CoffeeScript for .coffee assets and views
@@ -23,6 +24,8 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+# Code critics
+gem 'rubycritic', '~> 4.0', '>= 4.0.2'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -49,6 +52,16 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem "spring-commands-rspec"
+  gem 'spring-commands-cucumber'
+  gem 'spring-commands-spinach'
+  gem 'spring-commands-testunit'
+  # Guard setup
+  gem 'guard'
+  gem 'guard-sass', '~> 1.6'
+  gem 'guard-rspec', '~> 4.7', '>= 4.7.3'
+  gem 'guard-compat', '~> 1.2', '>= 1.2.1'
+  gem 'guard-livereload', '~> 2.5', '>= 2.5.2'
 end
 
 group :test do
@@ -70,4 +83,3 @@ gem 'ransack'
 gem 'mailcatcher'
 gem 'kaminari'
 gem 'sidekiq'
-

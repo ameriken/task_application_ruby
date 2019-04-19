@@ -17,7 +17,7 @@ services:
     build:
       context: .
       dockerfile: .docker/rails/Dockerfile
-    #image: task_application_ruby_app:20190421
+    image: task_application_ruby_app:20190420v1
     command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- bin/rails s"
     ports:
     - "3000:3000"
@@ -30,7 +30,6 @@ services:
     env_file: .env.dev
     links:
     - db
-    - redis
     - smtp
     stdin_open: true
     tty: true
@@ -41,11 +40,29 @@ services:
   #  command: ["bundle", "exec", "guard"]
   #  tty: false
   #  stdin_open: false
+  worker: 
+    container_name: worker
+    #build:
+    #  context: .
+    #  dockerfile: .docker/rails/Dockerfile
+    #image: task_application_ruby_app:20190421
+    image: task_application_ruby_app:20190420v1
+    command: bundle exec sidekiq
+    volumes:
+    - .:/myapp
+    environment:
+      RAILS_ENV: development
+    env_file: .env.dev
+    links:
+    - db
+    - redis
   redis:
-    build: .docker/redis/
+    #build: .docker/redis/
+    image: task_application_ruby_redis:20190420
     ports:
       - "6379:6379"
-    command: redis-server --appendonly yes --requirepass foobared
+    #command: redis-server --appendonly yes --requirepass foobared
+    command: redis-server --appendonly yes
     volumes:
     - redis-data1:/data
   smtp:

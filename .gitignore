@@ -32,3 +32,6 @@ build
 .docker/
 .idea
 .vscode
+
+# offen use command
+.command

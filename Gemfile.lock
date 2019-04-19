@@ -425,6 +425,7 @@ DEPENDENCIES
   rails (~> 5.2.2)
   rails_autolink
   ransack
+  redis (~> 4.1)
   rspec-rails (~> 3.8)
   ruby-debug-ide (~> 0.7.0.beta7)
   rubycritic (~> 4.0, >= 4.0.2)

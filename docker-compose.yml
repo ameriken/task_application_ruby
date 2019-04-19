@@ -12,12 +12,12 @@ services:
     - "3306:3306"
     volumes:
     - db-data:/var/lib/mysql
-  app:
+  app: 
     container_name: app
     #build:
     #  context: .
     #  dockerfile: .docker/rails/Dockerfile
-    image: task_application_ruby_app:20190418
+    image: task_application_ruby_app:20190421
     command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- bin/rails s"
     ports:
     - "3000:3000"
@@ -33,6 +33,13 @@ services:
     - smtp
     stdin_open: true
     tty: true
+  #あくまでもサンプルであり実施はしてない模様。今後拡張する予定
+  #guard:
+  #  image: task_application_ruby_app:20190420
+  #  container_name: guard
+  #  command: ["bundle", "exec", "guard"]
+  #  tty: false
+  #  stdin_open: false
   smtp:
     container_name: smtp
     image: task_application_ruby_smtp:20190418

@@ -57,6 +57,7 @@ services:
     - redis
   redis:
     #build: .docker/redis/
+    container_name: redis
     image: task_application_ruby_redis:20190420
     ports:
       - "6379:6379"

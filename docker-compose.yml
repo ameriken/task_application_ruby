@@ -14,9 +14,9 @@ services:
     - db-data:/var/lib/mysql
   app: 
     container_name: app
-    build:
-      context: .
-      dockerfile: .docker/rails/Dockerfile
+    #build:
+    #  context: .
+    #  dockerfile: .docker/rails/Dockerfile
     image: task_application_ruby_app:20190420v1
     command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- bin/rails s"
     ports:
@@ -45,7 +45,6 @@ services:
     #build:
     #  context: .
     #  dockerfile: .docker/rails/Dockerfile
-    #image: task_application_ruby_app:20190421
     image: task_application_ruby_app:20190420v1
     command: bundle exec sidekiq
     volumes:

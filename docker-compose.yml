@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   db:
-    container_name: db
+    container_name: task_application_db
     image: db_amemiya:20190407
     environment:
       MYSQL_ROOT_PASSWORD: pass
@@ -13,7 +13,7 @@ services:
     volumes:
     - db-data:/var/lib/mysql
   app: 
-    container_name: app
+    container_name: task_application_app
     #build:
     #  context: .
     #  dockerfile: .docker/rails/Dockerfile
@@ -41,7 +41,7 @@ services:
   #  tty: false
   #  stdin_open: false
   worker: 
-    container_name: worker
+    container_name: task_application_worker
     #build:
     #  context: .
     #  dockerfile: .docker/rails/Dockerfile
@@ -56,6 +56,7 @@ services:
     - db
     - redis
   redis:
+    container_name: task_application_redis
     #build: .docker/redis/
     container_name: redis
     image: task_application_ruby_redis:20190420
@@ -66,14 +67,14 @@ services:
     volumes:
     - redis-data1:/data
   smtp:
-    container_name: smtp
+    container_name: task_application_smtp
     image: task_application_ruby_smtp:20190418
     #build: .docker/mailcatcher/
     ports:
       - "1080:1080"
       - "1025:1025"
   chrome:
-    container_name: chrome
+    container_name: task_application_chrome
     image: task_application_ruby_chrome:20190418
     #build: .docker/selenium/
     links:

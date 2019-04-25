@@ -33,6 +33,9 @@ Capybara.configure do |config|
   config.server_host = "app"
   # ポートはデフォルトではランダムに割り当てられるが、設定を簡単にするため固定
   #config.server_port = 3000
+  Capybara.run_server = false
+  Capybara.asset_host = './tmp/capybara/'
+  Capybara.save_path= './tmp/capybara/'
   config.javascript_driver = :selenium_chrome_headless
 end
 
